@@ -28,15 +28,8 @@ namespace CheeseMVC.Controllers
             if (ModelState.IsValid)
             {
                 // Add the new cheese to my existing cheeses
-                Cheese newCheese = new Cheese
-                {
-                    Name = addCheeseViewModel.Name,
-                    Description = addCheeseViewModel.Description,
-                    Type = addCheeseViewModel.Type
-                };
-
+                Cheese newCheese = addCheeseViewModel.CreateCheese();
                 CheeseData.Add(newCheese);
-
                 return Redirect("/Cheese");
             }
 
@@ -44,19 +37,24 @@ namespace CheeseMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int cheeseId)
+        [Route("/Cheese/Edit")]
+        public IActionResult AddEditCheeseViewModel(int cheeseId)
         {
             Cheese cheese = CheeseData.GetById(cheeseId);
-            ViewBag.cheese = cheese;
-            return View();
+            AddEditCheeseViewModel cheeseToEdit = new AddEditCheeseViewModel(cheese);
+            cheeseToEdit.cheeseId = cheeseId;
+            return View(cheeseToEdit);
         }
 
         [HttpPost]
-        public IActionResult Edit(int cheeseId, string name, string description)
+        [Route("/Cheese/Edit")]
+        public IActionResult AddEditCheeseViewModel(AddEditCheeseViewModel model)
         {
             var cheeses = CheeseData.GetAll();
-            cheeses[cheeseId-1].Name = name;
-            cheeses[cheeseId-1].Description = description;
+            cheeses[model.cheeseId].Name = model.Name;
+            cheeses[model.cheeseId].Description = model.Description;
+            cheeses[model.cheeseId].Type = model.Type;
+            cheeses[model.cheeseId].Rating = model.Rating;
             return Redirect("Index");
         }
 
