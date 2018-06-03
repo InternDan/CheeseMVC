@@ -8,6 +8,7 @@ namespace CheeseMVC.Models
     public class CheeseData
     {
         static private List<Cheese> cheeses = new List<Cheese>();
+        private static int newCheeseId = 0;
 
         // GetAll
         public static List<Cheese> GetAll()
@@ -18,6 +19,7 @@ namespace CheeseMVC.Models
         // Add
         public static void Add(Cheese newCheese)
         {
+            newCheese.CheeseId = newCheeseId++;
             cheeses.Add(newCheese);
         }
 

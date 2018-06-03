@@ -10,6 +10,7 @@ namespace CheeseMVC.ViewModels
 {
     public class AddCheeseViewModel
     {
+
         [Required]
         [Display(Name = "Cheese Name")]
         public string Name { get; set; }
@@ -17,9 +18,18 @@ namespace CheeseMVC.ViewModels
         [Required(ErrorMessage = "You must give your cheese a description")]
         public string Description { get; set; }
 
+        [Required]
+        [Range(0,5)]
+        public int Rating{get;set;}
+
         public CheeseType Type { get; set; }
 
         public List<SelectListItem> CheeseTypes { get; set; }
+
+        public Cheese CreateCheese(){
+            Cheese cheese = new Cheese(Name,Description,Type,Rating);
+            return cheese;
+        }
 
         public AddCheeseViewModel() {
 

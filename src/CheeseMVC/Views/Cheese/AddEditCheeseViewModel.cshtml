@@ -1,0 +1,46 @@
+﻿@model CheeseMVC.ViewModels.AddEditCheeseViewModel
+
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Edit @Model.Name (ID = @Model.cheeseId)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label value="name" class="control-label">Name</label>
+                <input value=@Model.Name class="form-control" type="text" name="name" />
+            </div>
+            <div class="form-group">
+                <label value="Description" class="control-label">Description</label>
+                <input type="text" value=@Model.Description class="form-control" name="description" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating"></label>
+                <input class="form-control" asp-for="Rating" />
+                <span asp-validation-for="Rating"></span>
+            </div>
+            <!-- <div class="form-group">
+        <label asp-for="Type"></label>
+        <select asp-for="Type" asp-items="CheeseMVC.Models.CheeseType"></select>
+    </div> -->
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+            <input type="hidden" value=@Model.cheeseId name="cheeseId" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
